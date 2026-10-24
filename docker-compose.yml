@@ -1,0 +1,22 @@
+# Roast Report — Portainer stack
+#
+# 1. Replace YOUR_GITHUB_USERNAME below with your GitHub username (lowercase).
+# 2. In Portainer: Stacks -> Add stack -> Web editor -> paste this -> Deploy the stack.
+# 3. Open http://<your-truenas-ip>:8085 and create your account.
+
+services:
+  roast-report:
+    image: ghcr.io/YOUR_GITHUB_USERNAME/roast-report:latest
+    container_name: roast-report
+    restart: unless-stopped
+    ports:
+      - "8085:8080"          # host:container. Change the left number if 8085 is already used.
+    environment:
+      TZ: Europe/London
+      ALLOW_SIGNUP: "true"   # set to "false" once everyone has an account
+      COOKIE_SECURE: "false" # keep false for plain http:// on your LAN
+    volumes:
+      - roast-report-data:/data   # your database lives here; survives updates and redeploys
+
+volumes:
+  roast-report-data:
